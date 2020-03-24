@@ -52,7 +52,24 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('gets tweet by id', async() => {
+    const tweet = await Tweet.create({ 
+      handle: '@testing1', text: 'testing1' 
+    });
+    return request(app)
+      .get(`/api/v1/tweets/${tweet._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: tweet._id.toString(),
+          handle: tweet.handle, 
+          text: tweet.text,  
+          __v: 0
+        });
+      });
+  });
 });
+
 
 
 
